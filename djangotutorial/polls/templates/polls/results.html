@@ -1,0 +1,40 @@
+{% extends "polls/base.html" %}
+{% load polls_extras %}
+
+{% block title %}Results — {{ question.question_text }}{% endblock %}
+
+{% block content %}
+<a href="{% url 'polls:index' %}" class="back-link">← Back to polls</a>
+
+<div class="glass-card">
+    <h1 class="question-title">{{ question.question_text }}</h1>
+
+    <div class="results-list">
+        {% for choice in question.choice_set.all %}
+        <div class="result-item">
+            <div class="result-header">
+                <span class="result-label">{{ choice.choice_text }}</span>
+                <span class="result-votes">{{ choice.votes }} vote{{ choice.votes|pluralize }}</span>
+            </div>
+            <div class="result-bar-track">
+                {% with pct=choice.votes|vote_percent:total_votes %}
+                <div class="result-bar-fill{% if choice.votes == max_votes and max_votes > 0 %} winner{% endif %}"
+                    style="width: {{ pct }}%;">
+                </div>
+                {% endwith %}
+            </div>
+            <div class="result-percentage">
+                {% with pct=choice.votes|vote_percent:total_votes %}
+                {{ pct }}%
+                {% endwith %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="btn-group">
+        <a href="{% url 'polls:detail' question.id %}" class="btn-primary">🗳️ Vote Again</a>
+        <a href="{% url 'polls:index' %}" class="btn-secondary">← All Polls</a>
+    </div>
+</div>
+{% endblock %}

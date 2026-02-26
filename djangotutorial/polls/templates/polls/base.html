@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Django Polls — Cast your vote on the latest questions">
+    <title>{% block title %}Polls{% endblock %} — Django Polls</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'polls/style.css' %}">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="{% url 'polls:index' %}" class="nav-brand">
+                <span class="brand-icon">🗳️</span>
+                <span class="brand-text">Django<span class="brand-accent">Polls</span></span>
+            </a>
+            <div class="nav-links">
+                <a href="{% url 'polls:index' %}" class="nav-link">Home</a>
+                <a href="/admin/" class="nav-link">Admin</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="container">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <p class="footer-text">Built with <span class="footer-heart">♥</span> using Django</p>
+            <p class="footer-sub">© 2026 Django Polls</p>
+        </div>
+    </footer>
+</body>
+
+</html>

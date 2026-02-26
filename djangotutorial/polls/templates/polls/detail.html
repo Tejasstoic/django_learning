@@ -1,0 +1,29 @@
+{% extends "polls/base.html" %}
+
+{% block title %}{{ question.question_text }}{% endblock %}
+
+{% block content %}
+<a href="{% url 'polls:index' %}" class="back-link">← Back to polls</a>
+
+<div class="glass-card">
+    <h1 class="question-title">{{ question.question_text }}</h1>
+
+    {% if error_message %}
+    <div class="error-alert">{{ error_message }}</div>
+    {% endif %}
+
+    <form action="{% url 'polls:vote' question.id %}" method="post">
+        {% csrf_token %}
+        <fieldset class="choices-list">
+            <legend>{{ question.question_text }}</legend>
+            {% for choice in question.choice_set.all %}
+            <label class="choice-item" for="choice{{ forloop.counter }}">
+                <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+                <span>{{ choice.choice_text }}</span>
+            </label>
+            {% endfor %}
+        </fieldset>
+        <button type="submit" class="btn-primary">🗳️ Cast Your Vote</button>
+    </form>
+</div>
+{% endblock %}

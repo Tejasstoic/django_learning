@@ -1,0 +1,28 @@
+{% extends "polls/base.html" %}
+
+{% block title %}Latest Polls{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1 class="page-title">Latest Polls</h1>
+    <p class="page-subtitle">Cast your vote on the questions below</p>
+</div>
+
+{% if latest_question_list %}
+<div class="polls-grid">
+    {% for question in latest_question_list %}
+    <a href="{% url 'polls:detail' question.id %}" class="poll-card">
+        <span class="poll-number">{{ forloop.counter }}</span>
+        <span class="poll-text">{{ question.question_text }}</span>
+        <span class="poll-arrow">→</span>
+    </a>
+    {% endfor %}
+</div>
+{% else %}
+<div class="empty-state">
+    <span class="empty-icon">📭</span>
+    <h2 class="empty-title">No polls available yet</h2>
+    <p class="empty-desc">Check back soon or create one in the admin panel.</p>
+</div>
+{% endif %}
+{% endblock %}
